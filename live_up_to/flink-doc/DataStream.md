@@ -67,21 +67,58 @@ env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
 ```
 
 ## 3.3 重启策略配置
-### 3.3.1 配置文件配置：flink-conf.yaml
-```
+* 默认：          使用默认的重启策略，以环境的配置文件为准
+* fixed-delay：  策略固定间隔
+* failure-rate： 失败率
+* none：         无重启
+
+### 3.3.1 固定策略方式
+例如：`间隔10秒，尝试重启3次`
+
+* 方法一：配置：flink-conf.yaml
+```yaml
 restart-strategy: fixed-delay 
 restart-strategy.fixed-delay.attempts: 3 
 restart-strategy.fixed-delay.delay: 10 s
 ```
 
-### 3.3.2 代码指定
+* 方法二：代码设置
 ```
-env.setRestartStrategy(RestartStrategies.fixedDelayRestart( 
-      3,// 尝试重启的次数 
-      Time.of(10, TimeUnit.SECONDS) // 间隔 
-    ));
+env.setRestartStrategy(
+    RestartStrategies.fixedDelayRestart( 3, Time.of(10, TimeUnit.SECONDS) ) 
+)
 ```
 
+### 3.3.2 失败率方式
+例如：`5分钟内若失败了3次则认为该job失败，重试间隔为10s`
+
+* 方法一：配置：flink-conf.yaml
+```yaml
+restart-strategy: failure-rate
+restart-strategy.failure-rate.max-failures-per-interval : 3
+restart-strategy.failure-rate.failure-rate-interval : 5 min
+restart-strategy.failure-rate.delay : 10 s
+```
+
+* 方法二：代码设置
+```
+env.setRestartStrategy(
+    RestartStrategies.failureRateRestart(3, Time.of(5, TimeUnit.MINUTES), Time.of(10, TimeUnit.SECONDS) )
+)
+```
+
+### 3.3.3 无重启
+* 方法一：配置：flink-conf.yaml
+```yaml
+restart-strategy: none
+```
+
+* 方法二：代码设置
+```
+env.setRestartStrategy(
+    RestartStrategies.noRestart()
+)
+```
 
 # 4 Operator
 ## 4.1 Connect 和 union

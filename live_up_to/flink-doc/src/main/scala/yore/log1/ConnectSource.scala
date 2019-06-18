@@ -2,7 +2,6 @@ package yore.log1
 
 import org.apache.flink.streaming.api.functions.source.{ParallelSourceFunction, SourceFunction}
 
-import scala.util.Random
 
 /**
   * 自定义 sourceFunction
@@ -10,7 +9,7 @@ import scala.util.Random
   * Created by yore on 2018/6/9 12:29
   */
 class ConnectSource extends ParallelSourceFunction[Record]{
-  private val random: Random = Random(100)
+  private val random: java.util.Random = new java.util.Random(100)
   private var isRunning: Boolean = true
 
   /**
