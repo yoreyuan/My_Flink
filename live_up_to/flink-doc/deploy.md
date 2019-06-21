@@ -55,8 +55,14 @@ Usage:
 
 例如：
 ```
+# 启动一个Flink ApplicationMaster	
+yarn-session.sh -n 4 -jm 1024 -tm 1024
+yarn-session.sh -n 3 -jm 1024 -tm 1024  -s 3 -nm FlinkOnYarnSession -d -st
 yarn-session.sh –n 2 -s 10 –jm 2048 –tm 10240 –qu root.default –nm test -d
+
+# 提交Flink到YARN上
 flink run –j test.jar –a “test” –p 20 –yid appId –nm flink-test -d
+flink run -m yarn-cluster -yn 4 -yjm 1024 -ytm 1024 ./examples/batch/WordCount.jar
 ```
 
 ## 注意
@@ -84,6 +90,46 @@ ln -s /opt/cm-5.16.1/share/cmf/common_jars/hadoop-auth-2.6.0-cdh5.14.0.jar $FLIN
 ln -s /opt/cm-5.16.1/share/cmf/common_jars/hadoop-common-2.6.0-cdh5.14.0.jar $FLINK_HOME/lib/hadoop-common-2.6.0-cdh5.14.0.jar
 ln -s /opt/cm-5.16.1/share/cmf/common_jars/hadoop-hdfs-2.6.0-cdh5.14.0.jar $FLINK_HOME/lib/hadoop-hdfs-2.6.0-cdh5.14.0.jar
 ln -s /opt/cm-5.16.1/share/cmf/common_jars/hadoop-yarn-api-2.6.0-cdh5.14.0.jar $FLINK_HOME/lib/hadoop-yarn-api-2.6.0-cdh5.14.0.jar
+```
+
+* 如果是`CDH 6.2.0`。
+有两种方式，①引入cdh5的jar；②引入cdh6的jar
+
+CDH5方式
+```bash
+ln -s /opt/cloudera/cm/lib/commons-configuration-1.9.jar $FLINK_HOME/lib/commons-configuration-1.9.jar
+ln -s /opt/cloudera/cm/lib/commons-lang-2.6.jar $FLINK_HOME/lib/commons-lang-2.6.jar
+ln -s /opt/cloudera/parcels/CDH-6.2.0-1.cdh6.2.0.p0.967373/jars/commons-logging-1.1.3.jar $FLINK_HOME/lib/commons-logging-1.1.3.jar
+ln -s /opt/cloudera/cm/lib/guava-14.0.jar $FLINK_HOME/lib/guava-14.0.jar
+ln -s /opt/cloudera/cm/lib/cdh5/hadoop-auth-2.6.0-cdh5.14.0.jar $FLINK_HOME/lib/hadoop-auth-2.6.0-cdh5.14.0.jar
+ln -s /opt/cloudera/cm/lib/cdh5/hadoop-common-2.6.0-cdh5.14.0.jar $FLINK_HOME/lib/hadoop-common-2.6.0-cdh5.14.0.jar
+ln -s /opt/cloudera/cm/lib/cdh5/hadoop-hdfs-2.6.0-cdh5.14.0.jar $FLINK_HOME/lib/hadoop-hdfs-2.6.0-cdh5.14.0.jar
+ln -s /opt/cloudera/cm/lib/cdh5/hadoop-yarn-api-2.6.0-cdh5.14.0.jar $FLINK_HOME/lib/hadoop-yarn-api-2.6.0-cdh5.14.0.jar
+ln -s /opt/cloudera/cm/lib/cdh5/hadoop-yarn-client-2.6.0-cdh5.14.0.jar $FLINK_HOME/lib/hadoop-yarn-client-2.6.0-cdh5.14.0.jar
+ln -s /opt/cloudera/cm/lib/cdh5/hadoop-yarn-common-2.6.0-cdh5.14.0.jar $FLINK_HOME/lib/hadoop-yarn-common-2.6.0-cdh5.14.0.jar
+ln -s /opt/cloudera/cm/lib/cdh6/protobuf-java-2.5.0.jar $FLINK_HOME/lib/protobuf-java-2.5.0.jar
+ln -s /opt/cloudera/cm/lib/cdh5/htrace-core4-4.0.1-incubating.jar $FLINK_HOME/lib/htrace-core4-4.0.1-incubating.jar
+
+```
+
+CDH6方式
+```bash
+ln -s /opt/cloudera/cm/lib/commons-configuration-1.9.jar $FLINK_HOME/lib/commons-configuration-1.9.jar
+ln -s /opt/cloudera/cm/lib/cdh6/commons-configuration2-2.1.1.jar $FLINK_HOME/lib/commons-configuration2-2.1.1.jar
+ln -s /opt/cloudera/cm/lib/commons-lang-2.6.jar $FLINK_HOME/lib/commons-lang-2.6.jar
+ln -s /opt/cloudera/parcels/CDH-6.2.0-1.cdh6.2.0.p0.967373/jars/commons-logging-1.1.3.jar $FLINK_HOME/lib/commons-logging-1.1.3.jar
+ln -s /opt/cloudera/cm/lib/guava-14.0.jar $FLINK_HOME/lib/guava-14.0.jar
+ln -s /opt/cloudera/cm/lib/cdh6/hadoop-auth-3.0.0-cdh6.2.0.jar  $FLINK_HOME/lib/hadoop-auth-3.0.0-cdh6.2.0.jar 
+ln -s /opt/cloudera/cm/lib/cdh6/hadoop-common-3.0.0-cdh6.2.0.jar  $FLINK_HOME/lib/hadoop-common-3.0.0-cdh6.2.0.jar
+ln -s /opt/cloudera/cm/lib/cdh6/hadoop-hdfs-3.0.0-cdh6.2.0.jar  $FLINK_HOME/lib/hadoop-hdfs-3.0.0-cdh6.2.0.jar
+ln -s /opt/cloudera/cm/lib/cdh6/hadoop-hdfs-client-3.0.0-cdh6.2.0.jar $FLINK_HOME/lib/hadoop-hdfs-client-3.0.0-cdh6.2.0.jar
+ln -s /opt/cloudera/cm/lib/cdh6/hadoop-yarn-api-3.0.0-cdh6.2.0.jar $FLINK_HOME/lib/hadoop-yarn-api-3.0.0-cdh6.2.0.jar
+ln -s /opt/cloudera/cm/lib/cdh6/hadoop-yarn-client-3.0.0-cdh6.2.0.jar $FLINK_HOME/lib/hadoop-yarn-client-3.0.0-cdh6.2.0.jar
+ln -s /opt/cloudera/cm/lib/cdh6/hadoop-yarn-common-3.0.0-cdh6.2.0.jar $FLINK_HOME/lib/hadoop-yarn-common-3.0.0-cdh6.2.0.jar
+ln -s /opt/cloudera/cm/lib/cdh6/protobuf-java-2.5.0.jar $FLINK_HOME/lib/protobuf-java-2.5.0.jar
+ln -s /opt/cloudera/cm/lib/woodstox-core-asl-4.4.1.jar $FLINK_HOME/lib/woodstox-core-asl-4.4.1.jar
+ln -s /opt/cloudera/cm/lib/stax2-api-3.1.4.jar $FLINK_HOME/lib/stax2-api-3.1.4.jar
+ln -s /opt/cloudera/cm/lib/cdh5/htrace-core4-4.0.1-incubating.jar $FLINK_HOME/lib/htrace-core4-4.0.1-incubating.jar
 ```
 
 # Standalone
