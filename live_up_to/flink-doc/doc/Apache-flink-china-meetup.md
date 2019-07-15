@@ -13,6 +13,19 @@ Apache Flink China最新发布的活动的大家可以在 **[活动行](https://
 
 <br/>
 
+# [2019-06-30 阿里云实时计算专场](https://files.alicdn.com/tpsservice/910f848dcd6bdb237ff1a258048ab361.zip)
+包含如下主题
+
+1. 【格灵深瞳-陈新宇】Flink在人脸识别实时业务中的应用
+
+2. 【阿里-高旸】实时计算场景化解决方案 
+
+3. 【阿里-瓦力】 如何构建基于Flink on Kubernetes的大数据平台 
+
+4. 【阿里-赵开兴】实时计算SQL开发常见问题及解决方案 
+
+<br/>
+
 # 2019-06-29 北京站
 1. [《Apache Flink 1.9 特性解读》](https://u8b6.cn/ylp)  杨克特(鲁尼) & 戴资力(Gordon)
 
